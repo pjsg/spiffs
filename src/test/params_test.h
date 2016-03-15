@@ -16,13 +16,30 @@
 #define SPIFFS_PHYS_ADDR      (4*1024*1024)
 
 // test using filesystem magic
+#ifndef SPIFFS_USE_MAGIC
 #define SPIFFS_USE_MAGIC    1
+#endif
+
 // test using filesystem magic length
 #define SPIFFS_USE_MAGIC_LENGTH   1
 
+#define SPIFFS_GC_MAX_RUNS  256
+
+#ifdef SECTOR_BITS
+#define SECTOR_SIZE         (1<<SECTOR_BITS)
+#else
 #define SECTOR_SIZE         65536
+#endif
+#ifdef BLOCK_SECTOR_BITS
+#define LOG_BLOCK           (SECTOR_SIZE<<BLOCK_SECTOR_BITS)
+#else
 #define LOG_BLOCK           (SECTOR_SIZE*2)
+#endif
+#ifdef PAGE_BITS
+#define LOG_PAGE            (1<<PAGE_BITS)
+#else
 #define LOG_PAGE            (SECTOR_SIZE/256)
+#endif
 
 #define DEFAULT_NUM_FD            8
 #define DEFAULT_NUM_CACHE_PAGES   8
