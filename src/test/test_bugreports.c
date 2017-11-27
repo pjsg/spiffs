@@ -1243,14 +1243,20 @@ TEST(slow_file_open_large) {
   for (i = 0; i < NUM; i++) {
     u32_t rd_before_grow = get_flash_ops_log_read_bytes();
     u32_t reads_before_grow = get_flash_ops_log_reads();
+    u32_t wr_before_grow = get_flash_ops_log_write_bytes();
+    u32_t writes_before_grow = get_flash_ops_log_writes();
     spiffs_file fd = SPIFFS_open(FS, "test", SPIFFS_O_RDWR | SPIFFS_O_APPEND, 0);
     TEST_CHECK_GT(fd, 0);
     TEST_CHECK_EQ(SPIFFS_write(FS, fd, buf, SIZ), SIZ);
     TEST_CHECK_EQ(SPIFFS_close(FS, fd), SPIFFS_OK);
     u32_t rd_after_grow = get_flash_ops_log_read_bytes();
     u32_t reads_after_grow = get_flash_ops_log_reads();
+    u32_t wr_after_grow = get_flash_ops_log_write_bytes();
+    u32_t writes_after_grow = get_flash_ops_log_writes();
     if (i >= 20) {
-      printf("Needs to read %d bytes (%d reads) to open/write/close file of size %d.\n", rd_after_grow - rd_before_grow, reads_after_grow - reads_before_grow,
+      printf("Read %d bytes (%d reads), writes %d bytes (%d writes) to open/write/close file of size %d.\n", 
+         rd_after_grow - rd_before_grow, reads_after_grow - reads_before_grow,
+         wr_after_grow - wr_before_grow, writes_after_grow - writes_before_grow,
          i * SIZ + SIZ);
     }
   }
