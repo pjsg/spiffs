@@ -601,6 +601,14 @@ void clear_flash_ops_log() {
   error_after_bytes_written = 0;
 }
 
+u32_t get_flash_ops_log_reads() {
+  return reads;
+}
+
+u32_t get_flash_ops_log_writes() {
+  return writes;
+}
+
 u32_t get_flash_ops_log_read_bytes() {
   return bytes_rd;
 }

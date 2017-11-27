@@ -84,6 +84,8 @@ void dump_erase_counts(spiffs *fs);
 void dump_flash_access_stats();
 void set_flash_ops_log(int enable);
 void clear_flash_ops_log();
+u32_t get_flash_ops_log_reads();
+u32_t get_flash_ops_log_writes();
 u32_t get_flash_ops_log_read_bytes();
 u32_t get_flash_ops_log_write_bytes();
 void invoke_error_after_read_bytes(u32_t b, char once_only);
